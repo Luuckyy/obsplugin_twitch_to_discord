@@ -7,4 +7,4 @@ STEP 5 : Push the Go Live Button 👍
 
 It takes 60 second before sending the discord webhook because twitch cannot go faster :)
 
-Made by @lucky7_hm
+Twitter : @lucky7_hm

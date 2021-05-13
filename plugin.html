@@ -1,0 +1,56 @@
+<html>
+    <body>
+        <script src="https://code.jquery.com/jquery-3.0.0.js"></script>
+        <script src="https://code.jquery.com/jquery-migrate-3.3.2.js"></script>
+        <script type="text/javascript" src="./config.json"></script>
+        <script>
+            var requestToken = new XMLHttpRequest();
+            requestToken.open("POST", "https://id.twitch.tv/oauth2/token?client_id=4368d7sek28tfmgpx9aa1uxvmlaeud&client_secret=gi79sw0x8h1a3s6ib1mru56gvmdf5m&grant_type=client_credentials");
+            requestToken.send();
+            requestToken.onreadystatechange = function() { //Appelle une fonction au changement d'état.
+                    if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                        var returnToken = JSON.parse(requestToken.responseText);
+                        var token = returnToken.access_token;
+                        var config = JSON.parse(data);
+                        var requestId = new XMLHttpRequest();
+                        requestId.open("GET", "https://api.twitch.tv/helix/users?login="+config.twitch_username);
+                        requestId.setRequestHeader("Client-ID", "4368d7sek28tfmgpx9aa1uxvmlaeud");
+                        requestId.setRequestHeader("Authorization", "Bearer "+token);
+                        requestId.setRequestHeader("Accept","application/vnd.twitchtv.v5+json");
+                        requestId.send();
+                        requestId.onreadystatechange = function() { //Appelle une fonction au changement d'état.
+                                if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                                    var returnedId = JSON.parse(requestId.responseText);
+                                    var id = returnedId.data[0].id;
+                                    window.addEventListener('obsStreamingStarting', function(event) {
+                                        //Getting Infos of Stream
+                                        var request = new XMLHttpRequest();
+                                        request.open("GET", "https://api.twitch.tv/kraken/streams/"+id);
+
+                                        request.setRequestHeader("Client-ID", "4368d7sek28tfmgpx9aa1uxvmlaeud");
+                                        request.setRequestHeader("Authorization", "Bearer "+token);
+                                        request.setRequestHeader("Accept","application/vnd.twitchtv.v5+json");
+                                        setTimeout(() => {
+                                            request.send();
+                                        }, 60000);
+                                        request.onreadystatechange = function() { //Appelle une fonction au changement d'état.
+                                            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                                                var returned = JSON.parse(request.responseText);
+                                                var requestDeux = new XMLHttpRequest();
+                                                requestDeux.open("POST", config.webhook_discord_url);
+                                                requestDeux.setRequestHeader('Content-Type', 'application/json');
+                                                var params = {
+                                                    content: returned.stream.channel.status+"\n"+"https://twitch.tv/"+config.twitch_username
+                                                }
+                                                requestDeux.send(JSON.stringify(params));
+                                            }
+                                        }
+
+                                    });
+                                }
+                            }
+                    }
+                }
+        </script>
+    </body>
+</html>

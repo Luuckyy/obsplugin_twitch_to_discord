@@ -8,7 +8,7 @@ STEP 5 : Push the Go Live Button 👍
 It takes 60 seconds before sending the discord webhook because twitch cannot go faster :)
 
 Why did i make this when mee6 exists ?
-Well with the webhook you can personify the bot
+Well with the webhook you can personify the bot (i was bored)
 
 I will make a new variable in config.json so you can type your personal message
 

@@ -5,6 +5,6 @@ STEP 3 : Choose plugin.html for the file
 STEP 4 : Hide the Browser
 STEP 5 : Push the Go Live Button 👍
 
-It takes 60 second before sending the discord webhook because twitch cannot go faster :)
+It takes 60 seconds before sending the discord webhook because twitch cannot go faster :)
 
 Twitter : @lucky7_hm

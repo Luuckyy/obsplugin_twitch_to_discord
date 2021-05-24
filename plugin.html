@@ -32,7 +32,7 @@
                                         request.setRequestHeader("Accept","application/vnd.twitchtv.v5+json");
                                         setTimeout(() => {
                                             request.send();
-                                        }, 60000);
+                                        }, 120000);
                                         request.onreadystatechange = function() { //Appelle une fonction au changement d'état.
                                             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
                                                 var returned = JSON.parse(request.responseText);
